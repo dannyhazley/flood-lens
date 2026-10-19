@@ -1,0 +1,4 @@
+interface:
+  display_name: "FloodLens Evidence reviewer"
+  short_description: "Review real changes against requirements, standards and chec"
+  default_prompt: "Use $floodlens-reviewer for my current FloodLens checkpoint and bounded ticket."

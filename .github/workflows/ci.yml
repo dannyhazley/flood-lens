@@ -1,0 +1,70 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-and-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install locked dependencies
+        run: uv sync --locked --all-groups
+
+      - name: Check lint
+        run: uv run ruff check .
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      - name: Run tests
+        run: |
+          mkdir -p reports
+          uv run pytest --junitxml=reports/pytest.xml
+
+      - name: Build package
+        run: uv build
+
+      - name: Install wheel in a separate environment
+        run: |
+          uv venv /tmp/floodlens-wheel-check
+          uv pip install \
+            --python /tmp/floodlens-wheel-check/bin/python \
+            dist/*.whl
+
+      - name: Check installed package outside the checkout
+        working-directory: /tmp
+        run: |
+          /tmp/floodlens-wheel-check/bin/python -c \
+            "from importlib.metadata import version; print(version('flood-lens'))"
+          /tmp/floodlens-wheel-check/bin/flood-lens --help
+
+      - name: Upload test report and package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-results
+          path: |
+            reports/pytest.xml
+            dist/*
+          if-no-files-found: ignore
+          retention-days: 7

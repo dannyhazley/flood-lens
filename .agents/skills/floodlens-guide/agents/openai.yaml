@@ -1,0 +1,4 @@
+interface:
+  display_name: "FloodLens Guide & ticket steward"
+  short_description: "Choose one bounded checkpoint task and maintain authorised J"
+  default_prompt: "Use $floodlens-guide for my current FloodLens checkpoint and bounded ticket."

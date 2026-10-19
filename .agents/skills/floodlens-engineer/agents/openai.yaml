@@ -1,0 +1,4 @@
+interface:
+  display_name: "FloodLens Engineering partner"
+  short_description: "Implement or debug the authorised ticket in small explained,"
+  default_prompt: "Use $floodlens-engineer for my current FloodLens checkpoint and bounded ticket."

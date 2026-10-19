@@ -1,0 +1,12 @@
+=== OS ===
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+arm64
+
+=== Memory ===
+PhysMem: 30G used (3151M wired, 7245M compressor), 889M unused.
+
+=== Disk space ===
+Filesystem        Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk3s3s1   926Gi    12Gi    93Gi    12%    459k  978M    0%   /

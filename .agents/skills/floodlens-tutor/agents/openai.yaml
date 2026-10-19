@@ -1,0 +1,4 @@
+interface:
+  display_name: "FloodLens Teaching mentor"
+  short_description: "Teach one checkpoint concept with a worked example and a rep"
+  default_prompt: "Use $floodlens-tutor for my current FloodLens checkpoint and bounded ticket."
